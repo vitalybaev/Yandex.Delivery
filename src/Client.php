@@ -132,10 +132,18 @@ class Client
 
         $httpParameters['secret_key'] = md5($secretKeyBase);
 
+        // Выполняем запрос
         $httpResponse = $this->httpClient->request('POST', "https://delivery.yandex.ru/api/$this->apiVersion/$method", [
             'form_params' => $httpParameters,
         ]);
 
-        return $httpResponse->getBody()->getContents();
+        // Получаем тело ответа
+        $body = $httpResponse->getBody()->getContents();
+        $json = json_decode($body);
+        if (!$json) {
+            throw new Exception\InvalidJsonException("Некорректный JSON");
+        }
+
+        return $json;
     }
 }
