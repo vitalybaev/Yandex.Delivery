@@ -1,0 +1,21 @@
+{
+    "name": "vitalybaev/yandex.delivery",
+    "description": "PHP SDK for delivery.yandex.ru / SDK для работы с Яндекс.Доставкой",
+    "keywords": ["yandex", "delivery", "яндекс", "доставка"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vitaly Baev",
+            "email": "dj@vitalybaev.ru"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vitalybaev\\YandexDelivery\\": "src/"
+        }
+    },
+}
