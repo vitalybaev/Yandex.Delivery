@@ -132,7 +132,7 @@ class Client
 
         $httpParameters['secret_key'] = md5($secretKeyBase);
 
-        $httpResponse = $this->httpClient->request('POST', "https://delivery.yandex.ru/api/$this->apiVersion/getIndex", [
+        $httpResponse = $this->httpClient->request('POST', "https://delivery.yandex.ru/api/$this->apiVersion/$method", [
             'form_params' => $httpParameters,
         ]);
 
