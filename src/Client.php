@@ -124,7 +124,7 @@ class Client
         ksort($httpParameters);
 
         // Получаем secret_key
-        // $secretKeyBase = '';
+        $secretKeyBase = '';
         foreach ($httpParameters as $value) {
             $secretKeyBase .= $value;
         }
