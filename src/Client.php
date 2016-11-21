@@ -3,7 +3,7 @@
 namespace Vitalybaev\YandexDelivery;
 
 /**
- *
+ * Библиотека для выполнения запросов к API Яндекс.Доставки.
  */
 class Client
 {
@@ -65,7 +65,7 @@ class Client
     }
 
     /**
-     * @return
+     * @return string
      */
     public function getSenderId()
     {
@@ -84,7 +84,7 @@ class Client
     }
 
     /**
-     * @return
+     * @return string
      */
     public function getClientId()
     {
@@ -108,6 +108,8 @@ class Client
      * @param  string $method
      * @param  string $parameters
      * @return array
+     * @throws Exception\InvalidJsonException
+     * @throws Exception\MethodKeysNotExistsException
      */
     public function call($method, $parameters)
     {
@@ -121,16 +123,8 @@ class Client
             'sender_id' => $this->senderId,
         ]);
 
-        ksort($httpParameters);
-
-        // Получаем secret_key
-        $secretKeyBase = '';
-        foreach ($httpParameters as $value) {
-            $secretKeyBase .= $value;
-        }
-        $secretKeyBase .= $this->methodKeys[$method];
-
-        $httpParameters['secret_key'] = md5($secretKeyBase);
+        $secretKey = md5($this->getPostValues($httpParameters) . $this->methodKeys[$method]);
+        $httpParameters['secret_key'] = $secretKey;
 
         // Выполняем запрос
         $httpResponse = $this->httpClient->request('POST', "https://delivery.yandex.ru/api/$this->apiVersion/$method", [
@@ -145,5 +139,16 @@ class Client
         }
 
         return $json;
+    }
+
+    private function getPostValues($data)
+    {
+        if (!is_array($data)) {
+            return $data;
+        }
+        ksort($data);
+        return join('', array_map(function($k) {
+            return $this->getPostValues($k);
+        }, $data));
     }
 }
