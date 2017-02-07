@@ -47,6 +47,7 @@ class Client
      *
      * @param string $clientId
      * @param string $senderId
+     * @param string $apiVersion
      * @param array  $methodKeys
      */
     function __construct($clientId, $senderId, $apiVersion = '1.0', $methodKeys = [])
@@ -103,11 +104,13 @@ class Client
     }
 
     /**
-     * Выполняет запрос к API
+     * Выполняет запрос к API.
      *
      * @param  string $method
-     * @param  string $parameters
-     * @return array
+     * @param  array $parameters
+     *
+     * @return object
+     *
      * @throws Exception\InvalidJsonException
      * @throws Exception\MethodKeysNotExistsException
      */
@@ -141,6 +144,13 @@ class Client
         return $json;
     }
 
+    /**
+     * Возвращает строку для получения секретного ключа.
+     *
+     * @param $data
+     *
+     * @return string
+     */
     private function getPostValues($data)
     {
         if (!is_array($data)) {
