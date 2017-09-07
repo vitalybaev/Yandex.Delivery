@@ -26,7 +26,7 @@ class Client
      *
      * @var string
      */
-    private $version = '1.0';
+    private $apiVersion = '1.0';
 
     /**
      * Ключи запросов, выдаются в разделе Настройки -> Интеграции
